@@ -28,7 +28,7 @@ public enum Gender {
 	/**
 	 * Enum values.
 	 */
-	private static Gender[] values = Gender.values();
+	private static final Gender[] VALUES = Gender.values();
 	
 	/**
 	 * Retrieves the gender with the given index.
@@ -36,6 +36,6 @@ public enum Gender {
 	 * @return The gender.
 	 */
 	public static Gender get(byte index) {
-		return values[index];
+		return VALUES[index];
 	}
 }

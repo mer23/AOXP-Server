@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.ao.model.builder;
 
 import java.util.Map;
@@ -238,7 +238,7 @@ public class UserCharacterBuilder implements Builder<UserCharacter> {
 	public UserCharacterBuilder withSkills(Map<Skill, Byte> skills) throws InvalidAttributeValueException {
 		Preconditions.checkContentsNotNull(skills.values());
 
-		for (Skill skill : Skill.VALUES) {
+		for (Skill skill : Skill.values()) {
 			if (!skills.containsKey(skill)) {
 				throw new InvalidAttributeValueException();
 			}

@@ -23,6 +23,7 @@ package com.ao.model.character;
  */
 public enum Skill {
 
+	//LUCK //no existe más
 	MAGIC,
 	STEALING,
 	COMBAT_TACTICS,
@@ -50,8 +51,22 @@ public enum Skill {
 	 * TODO: I don't really like this...any better alternative?
 	 */
 	public static final int AMOUNT = Skill.values().length;
-	public static final Skill[] VALUES = Skill.values();
+	private static final Skill[] VALUES = Skill.values();
 
-	/** Maximum amount of points a character can earn for any given skill*/
+	/**
+	 * Maximum amount of points a character can earn for any given skill
+	 */
 	public static final int MAX_SKILL_POINT= 100;
+
+	/**
+	 * Retrieves the skill for the given index
+	 * @param index the index
+	 * @return the skill at the given index
+	 */
+	public Skill get(byte index) {
+		//TODO: must ensure index ranges between 0 and AMOUNT(not included)
+		return VALUES[index];
+	}
+
+
 }

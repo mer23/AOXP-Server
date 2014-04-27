@@ -41,7 +41,7 @@ public class SendSkillsPacket implements OutgoingPacket {
 	@Override
 	public void write(DataBuffer buffer) throws UnsupportedEncodingException {
 
-		for (Skill skill : Skill.VALUES) {
+		for (Skill skill : Skill.values()) {
 
 			buffer.put((byte)user.getSkill(skill));
 
@@ -51,5 +51,4 @@ public class SendSkillsPacket implements OutgoingPacket {
 				buffer.put((byte)0);
 		}
 	}
-
 }

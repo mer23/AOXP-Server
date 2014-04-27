@@ -31,10 +31,11 @@ public interface UserCharacter extends Character {
 
 	/**
 	 * Retrieves the experience needed to level up the skill.
+	 * ELU stands for Experience Level Up.
 	 * @param skill	The skill.
 	 * @return the experience needed to level up the skill.
 	 */
-	int getSkillELU(Skill skill); // ELU stands for Experience Level Up
+	int getSkillELU(Skill skill);
 
 	/**
 	 * Retrieves the skill's accumulated experience.
