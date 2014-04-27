@@ -125,11 +125,6 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 		this.description = description;
 	}
 
-	@Override
-	public void addToSkill(Skill skill, byte points) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Archetype getArchetype() {
@@ -160,6 +155,18 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 
 	@Override
 	public int getSkill(Skill skill) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public int getSkillELU(Skill skill) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getSkillExp(Skill skill) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -239,7 +246,19 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 		}
 			
 	}
+	
+	@Override
+	public void addToSkill(Skill skill, byte points) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void addToSkillExp(Skill skill, byte points) {
+		// TODO Auto-generated method stub
+
+	}
+	
 	@Override
 	public void attack(Character character) {
 		// TODO Auto-generated method stub

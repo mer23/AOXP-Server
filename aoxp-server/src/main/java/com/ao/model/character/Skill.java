@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package com.ao.model.character;
 
@@ -22,28 +22,28 @@ package com.ao.model.character;
  * Defines available skills.
  */
 public enum Skill {
-	LUCK,
+
 	MAGIC,
-	STEAL,
+	STEALING,
 	COMBAT_TACTICS,
 	HAND_TO_HAND_COMBAT,
-	MEDITATE,
-	STAB,
+	MEDITATION,
+	STABBING,
 	HIDING,
-	SURVIVE,
+	SURVIVAL,
 	LUMBER,
 	TRADE,
-	DEFENSE,
+	SHIELD_DEFENSE,
 	FISHING,
 	MINING,
-	WOODWORK,
-	IRONWORK,
+	WOODWORKING,
+	SMITHING,
 	LEADERSHIP,
-	TAME,
-	PROJECTILES,
+	TAMMING,
+	RANGED_COMBAT,
 	WRESTLING,
 	SAILING;
-	
+
 	/**
 	 * The amount of existing skills.
 	 * 
@@ -51,4 +51,7 @@ public enum Skill {
 	 */
 	public static final int AMOUNT = Skill.values().length;
 	public static final Skill[] VALUES = Skill.values();
+
+	/** Maximum amount of points a character can earn for any given skill*/
+	public static final int MAX_SKILL_POINT= 100;
 }

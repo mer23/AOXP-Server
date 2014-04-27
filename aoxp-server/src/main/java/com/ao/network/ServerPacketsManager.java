@@ -32,6 +32,7 @@ import com.ao.network.packet.outgoing.GuildChatPacket;
 import com.ao.network.packet.outgoing.ObjectCreatePacket;
 import com.ao.network.packet.outgoing.PlayMidiPacket;
 import com.ao.network.packet.outgoing.PlayWavePacket;
+import com.ao.network.packet.outgoing.SendSkillsPacket;
 import com.ao.network.packet.outgoing.UpdateDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthAndDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthPacket;
@@ -120,7 +121,7 @@ public class ServerPacketsManager {
 	    MEDITATE_TOGGLE(null),
 	    BLIND_NO_MORE(null),
 	    DUMB_NO_MORE(DumbNoMorePacket.class),
-	    SEND_SKILLS(null),
+	    SEND_SKILLS(SendSkillsPacket.class),
 	    TRAINER_CREATURE_LIST(null),
 	    GUILD_NEWS(null),
 	    OFFER_DETAILS(null),
