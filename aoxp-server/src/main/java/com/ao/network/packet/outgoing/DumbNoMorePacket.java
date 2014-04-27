@@ -15,37 +15,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 package com.ao.network.packet.outgoing;
 
 import java.io.UnsupportedEncodingException;
-
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.OutgoingPacket;
 
+
 /**
- * Packet to tell the client their new strength value
- * @author mvanotti
+ * Packet to tell the client the user is no longer dumb.
  */
-public class UpdateStrengthPacket implements OutgoingPacket {
+public class DumbNoMorePacket implements OutgoingPacket{
+
 	
-	protected byte strength;
-
-
-	/**
-	 * Creates a new UpdateStrength packet
-	 *
-	 * @param strength the user's strength
-	 */
-	public UpdateStrengthPacket(byte strength) {
-		super();
-		this.strength = strength;
-	}
-
-
-
 	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {
-		buffer.put(strength);
-	}
-
+	public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
 }

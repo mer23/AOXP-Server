@@ -37,6 +37,8 @@ import com.ao.network.packet.outgoing.UpdateStrengthAndDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthPacket;
 import com.ao.network.packet.outgoing.UserCharacterIndexInServerPacket;
 import com.ao.network.packet.outgoing.UserIndexInServer;
+import com.ao.network.packet.outgoing.DumbPacket;
+import com.ao.network.packet.outgoing.DumbNoMorePacket;
 
 /**
  * Manager for server-side packets.
@@ -104,7 +106,7 @@ public class ServerPacketsManager {
 	    REST_OK(null),
 	    ERROR_MESSAGE(ErrorMessagePacket.class),
 	    BLIND(null),
-	    DUMB(null),
+	    DUMB(DumbPacket.class),
 	    SHOW_SIGNAL(null),
 	    CHANGE_NPC_INVENTORY_SLOT(null),
 	    UPDATE_HUNGER_AND_THRIST(null),
@@ -117,7 +119,7 @@ public class ServerPacketsManager {
 	    ROLL_DICE(DiceRollPacket.class),
 	    MEDITATE_TOGGLE(null),
 	    BLIND_NO_MORE(null),
-	    DUMB_NO_MORE(null),
+	    DUMB_NO_MORE(DumbNoMorePacket.class),
 	    SEND_SKILLS(null),
 	    TRAINER_CREATURE_LIST(null),
 	    GUILD_NEWS(null),
