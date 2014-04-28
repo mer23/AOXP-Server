@@ -28,8 +28,8 @@ import com.ao.network.packet.OutgoingPacket;
  */
 public class NavigateTogglePacket implements OutgoingPacket{
 
-	
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
+    
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
 
 }

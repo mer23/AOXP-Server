@@ -28,7 +28,7 @@ import com.ao.network.packet.OutgoingPacket;
  */
 public class DumbNoMorePacket implements OutgoingPacket{
 
-	
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
+    
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
 }

@@ -23,50 +23,50 @@ package com.ao.model.character;
  */
 public enum Skill {
 
-	//LUCK //no existe más
-	MAGIC,
-	STEALING,
-	COMBAT_TACTICS,
-	HAND_TO_HAND_COMBAT,
-	MEDITATION,
-	STABBING,
-	HIDING,
-	SURVIVAL,
-	LUMBER,
-	TRADE,
-	SHIELD_DEFENSE,
-	FISHING,
-	MINING,
-	WOODWORKING,
-	SMITHING,
-	LEADERSHIP,
-	TAMMING,
-	RANGED_COMBAT,
-	WRESTLING,
-	SAILING;
+    //LUCK //no existe más
+    MAGIC,
+    STEALING,
+    COMBAT_TACTICS,
+    HAND_TO_HAND_COMBAT,
+    MEDITATION,
+    STABBING,
+    HIDING,
+    SURVIVAL,
+    LUMBER,
+    TRADE,
+    SHIELD_DEFENSE,
+    FISHING,
+    MINING,
+    WOODWORKING,
+    SMITHING,
+    LEADERSHIP,
+    TAMMING,
+    RANGED_COMBAT,
+    WRESTLING,
+    SAILING;
 
-	/**
-	 * The amount of existing skills.
-	 * 
-	 * TODO: I don't really like this...any better alternative?
-	 */
-	public static final int AMOUNT = Skill.values().length;
-	private static final Skill[] VALUES = Skill.values();
+    /**
+     * The amount of existing skills.
+     * 
+     * TODO: I don't really like this...any better alternative?
+     */
+    public static final int AMOUNT = Skill.values().length;
+    private static final Skill[] VALUES = Skill.values();
 
-	/**
-	 * Maximum amount of points a character can earn for any given skill
-	 */
-	public static final int MAX_SKILL_POINT= 100;
+    /**
+     * Maximum amount of points a character can earn for any given skill
+     */
+    public static final int MAX_SKILL_POINT= 100;
 
-	/**
-	 * Retrieves the skill for the given index
-	 * @param index the index
-	 * @return the skill at the given index
-	 */
-	public Skill get(byte index) {
-		//TODO: must ensure index ranges between 0 and AMOUNT(not included)
-		return VALUES[index];
-	}
+    /**
+     * Retrieves the skill for the given index
+     * @param index the index
+     * @return the skill at the given index
+     */
+    public Skill get(byte index) {
+        //TODO: must ensure index ranges between 0 and AMOUNT(not included)
+        return VALUES[index];
+    }
 
 
 }

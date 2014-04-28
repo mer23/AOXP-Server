@@ -30,18 +30,18 @@ import com.ao.network.packet.OutgoingPacket;
  */
 public class LoggedPacket implements OutgoingPacket{
 
-	private UserCharacter user;
+    private UserCharacter user;
 
 
-	public LoggedPacket(UserCharacter user) {
+    public LoggedPacket(UserCharacter user) {
 
-		this.user= user;
-	}
+        this.user= user;
+    }
 
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {
 
-		buffer.put((byte)UserArchetype.valueOf(user.getArchetype()).ordinal());
-	}
+        buffer.put((byte)UserArchetype.valueOf(user.getArchetype()).ordinal());
+    }
 
 }

@@ -27,9 +27,9 @@ import com.ao.network.packet.OutgoingPacket;
  * Packet to tell the client the user is now dumb. 
  */
 public class DumbPacket implements OutgoingPacket{
-	
-	
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
-	
+    
+    
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {}
+    
 }

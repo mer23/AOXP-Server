@@ -30,18 +30,18 @@ import com.ao.network.packet.OutgoingPacket;
  */
 public class UserCommerceInitPacket implements OutgoingPacket{
 
-	private LoggedUser trader;
+    private LoggedUser trader;
 
 
-	public UserCommerceInitPacket (LoggedUser trader) {
+    public UserCommerceInitPacket (LoggedUser trader) {
 
-		this.trader= trader;
-	}
+        this.trader= trader;
+    }
 
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {
 
-		buffer.putASCIIString(trader.getName());
-	}
+        buffer.putASCIIString(trader.getName());
+    }
 
 }

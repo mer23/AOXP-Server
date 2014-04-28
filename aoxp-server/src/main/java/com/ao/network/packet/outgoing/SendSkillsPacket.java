@@ -29,26 +29,26 @@ import com.ao.model.character.UserCharacter;
  */
 public class SendSkillsPacket implements OutgoingPacket {
 
-	private UserCharacter user;
+    private UserCharacter user;
 
 
-	public SendSkillsPacket(UserCharacter user) {
+    public SendSkillsPacket(UserCharacter user) {
 
-		super();
-		this.user= user;	
-	}
+        super();
+        this.user= user;    
+    }
 
-	@Override
-	public void write(DataBuffer buffer) throws UnsupportedEncodingException {
+    @Override
+    public void write(DataBuffer buffer) throws UnsupportedEncodingException {
 
-		for (Skill skill : Skill.values()) {
+        for (Skill skill : Skill.values()) {
 
-			buffer.put((byte)user.getSkill(skill));
+            buffer.put((byte)user.getSkill(skill));
 
-			if (user.getSkill(skill) < Skill.MAX_SKILL_POINT)
-				buffer.put( (byte) ( user.getSkillExp(skill) * 100 / user.getSkillELU(skill) ) );
-			else
-				buffer.put((byte)0);
-		}
-	}
+            if (user.getSkill(skill) < Skill.MAX_SKILL_POINT)
+                buffer.put( (byte) ( user.getSkillExp(skill) * 100 / user.getSkillELU(skill) ) );
+            else
+                buffer.put((byte)0);
+        }
+    }
 }
