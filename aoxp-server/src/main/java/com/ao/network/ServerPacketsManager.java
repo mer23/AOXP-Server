@@ -25,22 +25,27 @@ import java.util.Map;
 import com.ao.network.packet.OutgoingPacket;
 import com.ao.network.packet.outgoing.ChangeMapPacket;
 import com.ao.network.packet.outgoing.CharacterCreatePacket;
+import com.ao.network.packet.outgoing.CommerceEndPacket;
 import com.ao.network.packet.outgoing.ConsoleMessagePacket;
 import com.ao.network.packet.outgoing.DiceRollPacket;
+import com.ao.network.packet.outgoing.DisconnectPacket;
 import com.ao.network.packet.outgoing.ErrorMessagePacket;
 import com.ao.network.packet.outgoing.GuildChatPacket;
+import com.ao.network.packet.outgoing.NavigateTogglePacket;
 import com.ao.network.packet.outgoing.ObjectCreatePacket;
 import com.ao.network.packet.outgoing.PlayMidiPacket;
 import com.ao.network.packet.outgoing.PlayWavePacket;
+import com.ao.network.packet.outgoing.RemoveAllDialogsPacket;
 import com.ao.network.packet.outgoing.SendSkillsPacket;
 import com.ao.network.packet.outgoing.UpdateDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthAndDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthPacket;
 import com.ao.network.packet.outgoing.UserCharacterIndexInServerPacket;
+import com.ao.network.packet.outgoing.UserCommerceInitPacket;
 import com.ao.network.packet.outgoing.UserIndexInServer;
 import com.ao.network.packet.outgoing.DumbPacket;
 import com.ao.network.packet.outgoing.DumbNoMorePacket;
-
+import com.ao.network.packet.outgoing.LoggedPacket;
 /**
  * Manager for server-side packets.
  */
@@ -50,16 +55,16 @@ public class ServerPacketsManager {
 	 * Enumerates server packets.
 	 */
 	private enum ServerPackets {
-		LOGGED(null),
-	    REMOVE_ALL_DIALOGS(null),
-	    REMOVE_CHR_DIALOG(null),
-	    TOGGLE_NAVIGATE(null),
-	    DISCONNECT(null),
-	    COMMERCE_END(null),
+		LOGGED(LoggedPacket.class),
+	    REMOVE_ALL_DIALOGS(RemoveAllDialogsPacket.class),
+	    REMOVE_CHAR_DIALOG(null),
+	    TOGGLE_NAVIGATE(NavigateTogglePacket.class),
+	    DISCONNECT(DisconnectPacket.class),
+	    COMMERCE_END(CommerceEndPacket.class),
 	    BANKING_END(null),
 	    COMMERCE_INIT(null),
 	    BANK_INIT(null),
-	    USER_COMMERCE_INIT(null),
+	    USER_COMMERCE_INIT(UserCommerceInitPacket.class),
 	    USER_COMMERCE_END(null),
 	    USER_OFFER_CONFIRM(null),
 	    COMMERCE_CHAT(null),
