@@ -19,7 +19,7 @@
 package com.ao.model.fonts;
 
 /**
- * Defines available skills.
+ * Defines available fonts.
  */
 public enum Font {
     TALK,
