@@ -23,29 +23,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ao.network.packet.OutgoingPacket;
+import com.ao.network.packet.outgoing.AreaChangedPacket;
+import com.ao.network.packet.outgoing.BlockPositionPacket;
+import com.ao.network.packet.outgoing.ChangeInventorySlotPacket;
 import com.ao.network.packet.outgoing.ChangeMapPacket;
+import com.ao.network.packet.outgoing.CharacterChangeNickNamePacket;
+import com.ao.network.packet.outgoing.CharacterChangePacket;
 import com.ao.network.packet.outgoing.CharacterCreatePacket;
+import com.ao.network.packet.outgoing.CharacterForceMovePacket;
+import com.ao.network.packet.outgoing.CharacterMovePacket;
+import com.ao.network.packet.outgoing.CharacterRemovePacket;
+import com.ao.network.packet.outgoing.ChatOverHeadPacket;
+import com.ao.network.packet.outgoing.CommerceChatPacket;
 import com.ao.network.packet.outgoing.CommerceEndPacket;
 import com.ao.network.packet.outgoing.ConsoleMessagePacket;
+import com.ao.network.packet.outgoing.CreateFXPacket;
 import com.ao.network.packet.outgoing.DiceRollPacket;
 import com.ao.network.packet.outgoing.DisconnectPacket;
 import com.ao.network.packet.outgoing.ErrorMessagePacket;
 import com.ao.network.packet.outgoing.GuildChatPacket;
 import com.ao.network.packet.outgoing.NavigateTogglePacket;
 import com.ao.network.packet.outgoing.ObjectCreatePacket;
+import com.ao.network.packet.outgoing.ObjectDeletePacket;
 import com.ao.network.packet.outgoing.PlayMidiPacket;
 import com.ao.network.packet.outgoing.PlayWavePacket;
 import com.ao.network.packet.outgoing.RemoveAllDialogsPacket;
+import com.ao.network.packet.outgoing.RemoveCharDialogPacket;
 import com.ao.network.packet.outgoing.SendSkillsPacket;
+import com.ao.network.packet.outgoing.ShowMessageBoxPacket;
 import com.ao.network.packet.outgoing.UpdateDexterityPacket;
+import com.ao.network.packet.outgoing.UpdateExperiencePacket;
+import com.ao.network.packet.outgoing.UpdateGoldPacket;
+import com.ao.network.packet.outgoing.UpdateHPPacket;
+import com.ao.network.packet.outgoing.UpdateManaPacket;
+import com.ao.network.packet.outgoing.UpdatePositionPacket;
+import com.ao.network.packet.outgoing.UpdateStaminaPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthAndDexterityPacket;
 import com.ao.network.packet.outgoing.UpdateStrengthPacket;
+import com.ao.network.packet.outgoing.UpdateUserStatsPacket;
 import com.ao.network.packet.outgoing.UserCharacterIndexInServerPacket;
 import com.ao.network.packet.outgoing.UserCommerceInitPacket;
 import com.ao.network.packet.outgoing.UserIndexInServer;
 import com.ao.network.packet.outgoing.DumbPacket;
 import com.ao.network.packet.outgoing.DumbNoMorePacket;
 import com.ao.network.packet.outgoing.LoggedPacket;
+import com.ao.network.packet.outgoing.WorkRequestTargetPacket;
 /**
  * Manager for server-side packets.
  */
@@ -56,53 +78,53 @@ public class ServerPacketsManager {
      */
     private enum ServerPackets {
         LOGGED(LoggedPacket.class),
-        REMOVE_ALL_DIALOGS(RemoveAllDialogsPacket.class),
-        REMOVE_CHAR_DIALOG(null),
-        TOGGLE_NAVIGATE(NavigateTogglePacket.class),
-        DISCONNECT(DisconnectPacket.class),
-        COMMERCE_END(CommerceEndPacket.class),
-        BANKING_END(null),
-        COMMERCE_INIT(null),
-        BANK_INIT(null),
+        REMOVE_ALL_DIALOGS(RemoveAllDialogsPacket.class), //sends no data
+        REMOVE_CHAR_DIALOG(RemoveCharDialogPacket.class),
+        TOGGLE_NAVIGATE(NavigateTogglePacket.class), //sends no data
+        DISCONNECT(DisconnectPacket.class), //sends no data
+        COMMERCE_END(CommerceEndPacket.class), //sends no data
+        BANKING_END(null), //sends no data
+        COMMERCE_INIT(null), //sends no data
+        BANK_INIT(null), //CANNOT BE DONE UNTIL VAULT GETTERS ARE DEFINED
         USER_COMMERCE_INIT(UserCommerceInitPacket.class),
-        USER_COMMERCE_END(null),
-        USER_OFFER_CONFIRM(null),
-        COMMERCE_CHAT(null),
-        SHOW_BLACKSMITH_FORM(null),
-        SHOW_CARPENTER_FORM(null),
-        UPDATE_STAMINA(null),
-        UPDATE_MANA(null),
-        UPDATE_HP(null),
-        UPDATE_GOLD(null),
-        UPDATE_BANK_GOLD(null),
-        UPDATE_EXP(null),
+        USER_COMMERCE_END(null), //sends no data
+        USER_OFFER_CONFIRM(null), //sends no data
+        COMMERCE_CHAT(CommerceChatPacket.class),
+        SHOW_BLACKSMITH_FORM(null), //sends no data
+        SHOW_CARPENTER_FORM(null), //sends no data
+        UPDATE_STAMINA(UpdateStaminaPacket.class),
+        UPDATE_MANA(UpdateManaPacket.class),
+        UPDATE_HP(UpdateHPPacket.class),
+        UPDATE_GOLD(UpdateGoldPacket.class),
+        UPDATE_BANK_GOLD(null), //CANNOT BE DONE UNTIL A GOLD-IN-BANK GETTER IS DEFINED
+        UPDATE_EXP(UpdateExperiencePacket.class),
         CHANGE_MAP(ChangeMapPacket.class),
-        POSITION_UPDATE(null),
-        CHAT_OVER_HEAD(null),
+        POSITION_UPDATE(UpdatePositionPacket.class),
+        CHAT_OVER_HEAD(ChatOverHeadPacket.class),
         CONSOLE_MESSAGE(ConsoleMessagePacket.class),
         GUILD_CHAT(GuildChatPacket.class),
-        SHOW_MESSAGE_BOX(null),
+        SHOW_MESSAGE_BOX(ShowMessageBoxPacket.class),
         USER_INDEX_IN_SERVER(UserIndexInServer.class),
         USER_CHARACTER_INDEX_IN_SERVER(UserCharacterIndexInServerPacket.class),
         CHARACTER_CREATE(CharacterCreatePacket.class),
-        CHARACTER_REMOVE(null),
-        CHARACTER_CHANGE_NICKNAME(null),
-        CHARACTER_MOVE(null),
-        CHARACTER_FORCE_MOVE(null),
-        CHARACTER_CHANGE(null),
+        CHARACTER_REMOVE(CharacterRemovePacket.class),
+        CHARACTER_CHANGE_NICKNAME(CharacterChangeNickNamePacket.class),
+        CHARACTER_MOVE(CharacterMovePacket.class),
+        CHARACTER_FORCE_MOVE(CharacterForceMovePacket.class),
+        CHARACTER_CHANGE(CharacterChangePacket.class),
         OBJECT_CREATE(ObjectCreatePacket.class),
-        OBJECT_DEETE(null),
-        BLOCK_POSITION(null),
+        OBJECT_DELETE(ObjectDeletePacket.class),
+        BLOCK_POSITION(BlockPositionPacket.class),
         PLAY_MIDI(PlayMidiPacket.class),
         PLAY_WAVE(PlayWavePacket.class),
-        GUILD_LIST(null),
+        GUILD_LIST(null), //CAN'T BE DONE YET
         AREA_CHANGED(null),
-        TOGGLE_PAUSE(null),
-        TOGGLE_RAIN(null),
-        CREATE_FX(null),
-        UPDATE_USER_STATS(null),
-        WORK_REQUEST_TARGET(null),
-        CHANGE_INVENTORY_SLOT(null),
+        TOGGLE_PAUSE(null), //sends no data
+        TOGGLE_RAIN(null), //sends no data
+        CREATE_FX(CreateFXPacket.class),
+        UPDATE_USER_STATS(UpdateUserStatsPacket.class),
+        WORK_REQUEST_TARGET(WorkRequestTargetPacket.class),
+        CHANGE_INVENTORY_SLOT(ChangeInventorySlotPacket.class),
         CHANGE_BANK_SLOT(null),
         CHANGE_SPELL_SLOT(ChangeSpellSlotPacket.class),
         ATTRIBUTES(null),
