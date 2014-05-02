@@ -20,8 +20,8 @@ package com.ao.network.packet.outgoing;
 
 import java.io.UnsupportedEncodingException;
 
-import com.ao.model.character.UserCharacter;
 import com.ao.model.character.archetype.UserArchetype;
+import com.ao.model.user.LoggedUser;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.OutgoingPacket;
 
@@ -30,18 +30,22 @@ import com.ao.network.packet.OutgoingPacket;
  */
 public class LoggedPacket implements OutgoingPacket{
 
-    private UserCharacter user;
+    private LoggedUser character;
 
 
-    public LoggedPacket(UserCharacter user) {
+    /**
+     * Creates the packet.
+     * @param character the character that logged in
+     */
+    public LoggedPacket(LoggedUser character) {
 
-        this.user= user;
+        this.character= character;
     }
 
     @Override
     public void write(DataBuffer buffer) throws UnsupportedEncodingException {
 
-        buffer.put((byte)UserArchetype.valueOf(user.getArchetype()).ordinal());
+        buffer.put((byte)UserArchetype.valueOf(character.getArchetype()).ordinal());
     }
 
 }
