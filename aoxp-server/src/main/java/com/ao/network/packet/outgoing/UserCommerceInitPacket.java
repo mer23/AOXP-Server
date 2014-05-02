@@ -20,19 +20,21 @@ package com.ao.network.packet.outgoing;
 
 import java.io.UnsupportedEncodingException;
 
-import com.ao.model.character.UserCharacter;
 import com.ao.model.user.LoggedUser;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.OutgoingPacket;
 
 /**
- * Packet to tell the client to open user-to-user trade window.
+ * Packet that prompts the client to initiate user-to-user trade console.
  */
 public class UserCommerceInitPacket implements OutgoingPacket{
 
     private LoggedUser trader;
 
-
+    /**
+     * Creates the packet.
+     * @param trader the character with which the trade begins 
+     */
     public UserCommerceInitPacket (LoggedUser trader) {
 
         this.trader= trader;
