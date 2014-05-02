@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ao.network.packet.OutgoingPacket;
-import com.ao.network.packet.outgoing.AreaChangedPacket;
 import com.ao.network.packet.outgoing.BlockPositionPacket;
 import com.ao.network.packet.outgoing.ChangeInventorySlotPacket;
 import com.ao.network.packet.outgoing.ChangeMapPacket;
