@@ -11,6 +11,8 @@ import com.ao.network.Connection;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.IncomingPacket;
 import com.ao.network.packet.outgoing.ConsoleMessagePacket;
+import com.ao.network.packet.outgoing.CreateFXPacket;
+import com.ao.network.packet.outgoing.MeditateTogglePacket;
 import com.ao.service.MapService;
 
 public class WalkPacket implements IncomingPacket {
@@ -37,12 +39,14 @@ public class WalkPacket implements IncomingPacket {
 					new ConsoleMessagePacket("Dejas de meditar.", Font.INFO)
 				);
 
-				/* TODO
-				 * .Char.FX = 0
-				 * .Char.loops = 0
-				 * Call WriteMeditateToggle(UserIndex)
-				 * Call SendData(SendTa rget.ToPCArea, UserIndex, PrepareMessageCreateFX(.Char.CharIndex, 0, 0))
-				 */
+				user.getFx().setId(0);
+				user.getFx().setLoops(0);
+				
+				connection.send(
+						new MeditateTogglePacket());
+				
+				connection.send(
+						new CreateFXPacket(user));
 
 			} else {
 				Heading heading = Heading.get(buffer.get());

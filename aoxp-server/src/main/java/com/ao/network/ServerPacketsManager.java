@@ -41,6 +41,7 @@ import com.ao.network.packet.outgoing.DiceRollPacket;
 import com.ao.network.packet.outgoing.DisconnectPacket;
 import com.ao.network.packet.outgoing.ErrorMessagePacket;
 import com.ao.network.packet.outgoing.GuildChatPacket;
+import com.ao.network.packet.outgoing.MeditateTogglePacket;
 import com.ao.network.packet.outgoing.NavigateTogglePacket;
 import com.ao.network.packet.outgoing.ObjectCreatePacket;
 import com.ao.network.packet.outgoing.ObjectDeletePacket;
@@ -144,7 +145,7 @@ public class ServerPacketsManager {
         SHOW_FORUM_MESSAGE(null),
         SET_INVISIBLE(null),
         ROLL_DICE(DiceRollPacket.class),
-        MEDITATE_TOGGLE(null),
+        MEDITATE_TOGGLE(MeditateTogglePacket.class), //sends no data (was needed to continue implementing WalkPacket)
         BLIND_NO_MORE(null),
         DUMB_NO_MORE(DumbNoMorePacket.class),
         SEND_SKILLS(SendSkillsPacket.class),
