@@ -72,6 +72,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	private boolean hidden;
 	private boolean meditating;
 	private boolean sailing;
+	private boolean homecoming;
 
 	/*
 	 * AdminFlags
@@ -94,6 +95,8 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	private byte level;
 	private String name;
 	private String description;
+	private Position position;
+	private Heading heading;
 	
 	public LoggedUser(Reputation reputation, Race race, Gender gender,
 			Archetype archetype, boolean poisoned, boolean paralyzed,
@@ -403,8 +406,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 
 	@Override
 	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return position;
 	}
 
 	@Override
@@ -461,6 +463,10 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	@Override
 	public boolean isPoisoned() {
 		return poisoned;
+	}
+	
+	public boolean isHomecoming() {
+	    return homecoming;
 	}
 
 	@Override
@@ -521,8 +527,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 
 	@Override
 	public void setPosition(Position pos) {
-		// TODO Auto-generated method stub
-		
+		position= pos;		
 	}
 
 	@Override
@@ -563,13 +568,12 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	
 	@Override
 	public Heading getHeading() {
-		// TODO Auto-generated method stub
-		return Heading.EAST;
+		return heading;
 	}
 	
 	@Override
 	public void setHeading(Heading heading) {
-		
+		this.heading= heading;
 	}
 
 	@Override

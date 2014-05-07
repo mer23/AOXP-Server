@@ -10,6 +10,8 @@ import com.ao.model.user.LoggedUser;
 import com.ao.network.Connection;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.IncomingPacket;
+import com.ao.network.packet.outgoing.CharacterChangePacket;
+import com.ao.network.packet.outgoing.CharacterMovePacket;
 import com.ao.network.packet.outgoing.ConsoleMessagePacket;
 import com.ao.network.packet.outgoing.CreateFXPacket;
 import com.ao.network.packet.outgoing.MeditateTogglePacket;
@@ -17,7 +19,7 @@ import com.ao.service.MapService;
 
 public class WalkPacket implements IncomingPacket {
 
-	private MapService marService = ApplicationContext.getInstance(MapService.class);
+	private MapService mapService = ApplicationContext.getInstance(MapService.class);
 
 	@Override
 	public boolean handle(DataBuffer buffer, Connection connection) throws IndexOutOfBoundsException, UnsupportedEncodingException {
@@ -30,7 +32,7 @@ public class WalkPacket implements IncomingPacket {
 
 		//TODO check security issues
 
-		if (! user.isParalyzed()) {
+		if ( !( user.isParalyzed() || user.isImmobilized() ) ) {
 			if (user.isMeditating()) {
 				// Stop meditating, next action will start movement.
 				user.setMeditate(false);
@@ -46,16 +48,21 @@ public class WalkPacket implements IncomingPacket {
 						new MeditateTogglePacket());
 				
 				connection.send(
-						new CreateFXPacket(user));
+						new CreateFXPacket(user)); // Halts meditation FX with a no-effect FX
 
-			} else {
+			} else if (!user.isHomecoming()){
+			    
 				Heading heading = Heading.get(buffer.get());
+				
 				if (heading != null) {
 
 					// Move user
-					marService.moveCharacterTo(user, heading);
+					mapService.moveCharacterTo(user, heading);
 
 					//TODO Stop resting if needed
+					
+                    connection.send(
+                            new CharacterMovePacket(user));
 
 				} else {
 					return true;
@@ -65,6 +72,20 @@ public class WalkPacket implements IncomingPacket {
 		} else { //if paralized
 			//TODO set last message flag
 			//TODO aplicar seguridad contra SH
+		    
+		    Heading heading = Heading.get(buffer.get());
+
+            if (heading != null) {
+
+                user.setHeading(heading);
+
+                /* client updates character's heading without 
+                 * server notification (doesn't it?) so no need to send anything.
+                 * */
+
+            } else {
+                return true;
+            }
 		}
 
 		// Check if hidden and can move while hidden

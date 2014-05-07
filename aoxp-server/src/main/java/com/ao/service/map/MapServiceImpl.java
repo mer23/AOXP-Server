@@ -77,12 +77,11 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public void putCharacterAtPos(Character chara, Position pos) {
 		pos.getMap().putCharacterAtPos(chara, pos.getX(), pos.getY());
-		//TODO Seteamos aca la nueva position en el character?
 	}
 
 	@Override
 	public void moveCharacterTo(Character chara, Heading heading) {
-		//FIXME Metodo getPosition() de loggedUser no está implementado.
+
 		byte x = chara.getPosition().getX();
 		byte y = chara.getPosition().getY();
 
@@ -104,8 +103,15 @@ public class MapServiceImpl implements MapService {
 			x--;
 			break;
 		}
+		
+		// How much of this has to be done in Character.moveTo(Heading) method?
+		
+		Position newPos= new Position(x, y, chara.getPosition().getMap());
 
-		putCharacterAtPos(chara, new Position(x, y, chara.getPosition().getMap()));
+		putCharacterAtPos(chara, newPos);
+		
+	    chara.setPosition(newPos);   
+	    chara.setHeading(heading);
 	}
 
 }
