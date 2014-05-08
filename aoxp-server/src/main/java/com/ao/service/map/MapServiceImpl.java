@@ -104,14 +104,23 @@ public class MapServiceImpl implements MapService {
 			break;
 		}
 		
-		// How much of this has to be done in Character.moveTo(Heading) method?
+		//TODO How much of all this has to be done in Character.moveTo(Heading) method?
 		
+		//TODO This doesn't take into account map crossing because it always use char current map.
 		Position newPos= new Position(x, y, chara.getPosition().getMap());
 
-		putCharacterAtPos(chara, newPos);
+		//Checks whether the destination tile is blocked or not.
+		if (!newPos.getMap().getTile(x, y).isBlocked()) {
+		    
+		    putCharacterAtPos(chara, newPos); //puts character at his new tile in the map.
+		    
+		    chara.getPosition().getMap().getTile( //deletes character from the tile it was at before.
+		            chara.getPosition().getX(), chara.getPosition().getY()).setCharacter(null);
+		    
+	        chara.setPosition(newPos); //updates character's position
+		}
 		
-	    chara.setPosition(newPos);   
-	    chara.setHeading(heading);
+	    chara.setHeading(heading); //heading is updated regardless of blocked tiles.
 	}
 
 }
