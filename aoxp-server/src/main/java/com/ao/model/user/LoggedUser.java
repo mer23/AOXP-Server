@@ -728,7 +728,16 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	public void setSailing(boolean sailing) {
 		this.sailing = sailing;
 	}
-
+	
+    /**
+     * Picks up a given item.
+     * @param item the Item to pick up
+     * @return true if item was successfully added to inventory, false otherwise.
+     */
+	public boolean pickUp(Item item) {
+	    return false; //TODO to complete
+	}
+	
 	@Override
 	public void moveTo(Heading heading) {
 		// TODO Auto-generated method stub
