@@ -44,6 +44,7 @@ import com.google.inject.internal.Preconditions;
  */
 public class UserCharacterBuilder implements Builder<UserCharacter> {
 
+    //TODO we should mention what constitutes a valid name in this message.
 	public static final String INVALID_NAME_ERROR = "El nombre ingresado no es válido.";
 	public static final String INVALID_EMAIL_ERROR = "La dirección de e-mail ingresada no es válida.";
 

@@ -22,9 +22,11 @@ import java.io.UnsupportedEncodingException;
 
 import com.ao.context.ApplicationContext;
 import com.ao.model.user.ConnectedUser;
+import com.ao.model.user.LoggedUser;
 import com.ao.network.Connection;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.IncomingPacket;
+import com.ao.network.packet.outgoing.CharacterCreatePacket;
 import com.ao.network.packet.outgoing.ErrorMessagePacket;
 import com.ao.security.SecurityManager;
 import com.ao.service.LoginService;
@@ -66,6 +68,8 @@ public class LoginNewCharacterPacket implements IncomingPacket {
 		} catch (LoginErrorException e) {
 			loginError(connection, e.getMessage());
 		}
+		
+		connection.send( new CharacterCreatePacket((LoggedUser) connection.getUser()) );
 
 		return true;
 	}

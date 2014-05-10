@@ -33,6 +33,7 @@ import com.ao.model.character.archetype.UserArchetype;
 import com.ao.model.map.City;
 import com.ao.model.user.Account;
 import com.ao.model.user.ConnectedUser;
+import com.ao.model.user.LoggedUser;
 import com.ao.security.SecurityManager;
 import com.ao.service.CharacterBodyService;
 import com.ao.service.LoginService;
@@ -54,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
 	public static final String CORRUPTED_CLIENT_ERROR = "El cliente está dañado, por favor descárguelo nuevamente desde http://www.argentumonline.com.ar/";
 	public static final String BANNED_CHARACTER_ERROR = "Se te ha prohibido la entrada a Argentum debido a tu mal comportamiento. Puedes consultar el reglamento y el sistema de soporte desde www.argentumonline.com.ar";
 	public static final String INCORRECT_PASSWORD_ERROR = "Contraseña incorrecta.";
-	public static final String CHARACTER_CREATION_DISABLED_ERROR = "La creación de personajes en este servidor se ha deshabilitado.";
+	public static final String CHARACTER_CREATION_DISABLED_ERROR = "La creación de personajes en este servidor se ha deshabilitado momentaneamente.";
 	public static final String ONLY_ADMINS_ERROR = "Servidor restringido a administradores. Consulte la página oficial o el foro oficial para más información.";
 	public static final String MUST_THROW_DICES_BEFORE_ERROR = "Debe tirar los dados antes de poder crear un personaje.";
 	public static final String INVALID_RACE_ERROR = "La raza seleccionada no es válida.";
@@ -170,10 +171,8 @@ public class LoginServiceImpl implements LoginService {
 
 
 		// First, we have to create the new account.
-		Account acc;
-
 		try {
-			acc = accDAO.create(username, password, mail);
+			Account acc = accDAO.create(username, password, mail);
 		} catch(NameAlreadyTakenException e) {
 			throw new LoginErrorException(ACCOUNT_NAME_TAKEN_ERROR);
 
@@ -184,25 +183,21 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 
-		// Once we have the account, lets create the character itself!
+		// Once we have the account, lets create the character itself!	
 		try {
-			UserCharacter chara = charDAO.create(username, race, gender, archetype,
-					head, homeland, user.getAttribute(Attribute.STRENGTH),
+			charDAO.create(username, race, gender, archetype,
+			        head, homeland, user.getAttribute(Attribute.STRENGTH),
 					user.getAttribute(Attribute.AGILITY), user.getAttribute(Attribute.INTELLIGENCE),
 					user.getAttribute(Attribute.CHARISMA), user.getAttribute(Attribute.CONSTITUTION),
 					initialAvailableSkills, body);
+			
 		} catch (DAOException e) {
 			accDAO.delete(username);
 
 			throw new LoginErrorException(e.getMessage());
 		}
-
-		// Everything it's okay, associate the character with the account and the account with the user.
-		acc.addCharacter(username);
-		user.setAccount(acc);
-
-		// TODO: Put it in the world!
-
+		
+		connectExistingCharacter(user, username, password, version, clientHash);
 	}
 
 	@Override
@@ -251,9 +246,18 @@ public class LoginServiceImpl implements LoginService {
 
 		// TODO : send all data!
 
-		user.setAccount(acc);
+		user.setAccount(acc); //associates the account with the user
 
-		userService.logIn(user);
+	    try {
+	        character= (LoggedUser) charDAO.load(name); // loads the character.
+	            
+	    } catch (DAOException e) {
+	          throw new LoginErrorException(e.getMessage());
+	    }
+	       
+	    userService.logIn(user); //logs the character in.
+	    
+	    mapService.putCharacterAtPos(character, character.getPosition()); //places character in the world.        
 	}
 
 	/**
