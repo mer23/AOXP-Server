@@ -25,6 +25,7 @@ import com.ao.network.packet.incoming.DropPacket;
 import com.ao.network.packet.incoming.LoginExistingCharacterPacket;
 import com.ao.network.packet.incoming.LoginNewCharacterPacket;
 import com.ao.network.packet.incoming.PickUpPacket;
+import com.ao.network.packet.incoming.RequestPositionUpdatePacket;
 import com.ao.network.packet.incoming.ThrowDicesPacket;
 import com.ao.network.packet.incoming.WalkPacket;
 
@@ -44,9 +45,9 @@ public class ClientPacketsManager {
 		YELL(null),
 		WHISPER(null),
 		WALK(WalkPacket.class),
-		REQUEST_POSITION_UPDATE(null),
+		REQUEST_POSITION_UPDATE(RequestPositionUpdatePacket.class),
 		ATTACK(null),
-		PICK_UP(PickUpPacket.class), //TODO Is this the right place for it?
+		PICK_UP(PickUpPacket.class),
 		SAFE_TOGGLE(null),
 		RESUCITATION_SAFE_TOGGLE(null), //RESURRECTION
 		REQUEST_GUILD_LEADER_INFO(null),
@@ -61,7 +62,7 @@ public class ClientPacketsManager {
 		BANK_END(null),
 		USER_COMMERCE_OK(null),
 		USER_COMMERCE_REJECT(null),
-		DROP(DropPacket.class), //TODO Is this the right place for it?
+		DROP(DropPacket.class),
 		CAST_SPELL(null),
 		LEFT_CLICK(null),
 		DOUBLE_CLICK(null),
