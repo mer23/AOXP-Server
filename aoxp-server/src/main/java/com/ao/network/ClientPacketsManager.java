@@ -21,6 +21,7 @@ package com.ao.network;
 import java.io.UnsupportedEncodingException;
 
 import com.ao.network.packet.IncomingPacket;
+import com.ao.network.packet.incoming.DropPacket;
 import com.ao.network.packet.incoming.LoginExistingCharacterPacket;
 import com.ao.network.packet.incoming.LoginNewCharacterPacket;
 import com.ao.network.packet.incoming.PickUpPacket;
@@ -43,7 +44,8 @@ public class ClientPacketsManager {
 		YELL(null),
 		WHISPER(null),
 		WALK(WalkPacket.class),
-		PICK_UP(PickUpPacket.class); //TODO Is this the right place for it?
+		PICK_UP(PickUpPacket.class), //TODO Is this the right place for it?
+		DROP(DropPacket.class); //TODO Is this the right place for it?
 
 		protected IncomingPacket handler;
 
