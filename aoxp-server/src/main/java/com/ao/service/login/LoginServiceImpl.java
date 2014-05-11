@@ -95,7 +95,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public void connectNewCharacter(ConnectedUser user, String username, String password, byte bRace,
+	public LoggedUser connectNewCharacter(ConnectedUser user, String username, String password, byte bRace,
 			byte bGender, byte bArchetype, int head, String mail,
 			byte bHomeland, String clientHash,
 			String version) throws LoginErrorException {
@@ -197,11 +197,11 @@ public class LoginServiceImpl implements LoginService {
 			throw new LoginErrorException(e.getMessage());
 		}
 		
-		connectExistingCharacter(user, username, password, version, clientHash);
+		return connectExistingCharacter(user, username, password, version, clientHash);
 	}
 
 	@Override
-	public void connectExistingCharacter(ConnectedUser user, String name, String password, String version,
+	public LoggedUser connectExistingCharacter(ConnectedUser user, String name, String password, String version,
 			String clientHash) throws LoginErrorException {
 
 		checkClient(clientHash, version);
@@ -257,7 +257,9 @@ public class LoginServiceImpl implements LoginService {
 	       
 	    userService.logIn(user); //logs the character in.
 	    
-	    mapService.putCharacterAtPos(character, character.getPosition()); //places character in the world.        
+	    mapService.putCharacterAtPos(character, character.getPosition()); //places character in the world.
+	    
+	    return (LoggedUser)character;
 	}
 
 	/**

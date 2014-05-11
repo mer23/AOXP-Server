@@ -19,6 +19,7 @@
 package com.ao.service;
 
 import com.ao.model.user.ConnectedUser;
+import com.ao.model.user.LoggedUser;
 import com.ao.service.login.LoginErrorException;
 
 public interface LoginService {
@@ -33,7 +34,7 @@ public interface LoginService {
 	 * @param clientHash 	The client's integrity check hash.
 	 * @throws LoginErrorException
 	 */
-	void connectExistingCharacter(ConnectedUser user, String name, String password, String version,
+	LoggedUser connectExistingCharacter(ConnectedUser user, String name, String password, String version,
 			String clientHash) throws LoginErrorException;
 	
 	/**
@@ -53,7 +54,7 @@ public interface LoginService {
 	 * @return 
 	 * @throws LoginErrorException
 	 */
-	void connectNewCharacter(ConnectedUser user, String username, String password, byte race,
+	LoggedUser connectNewCharacter(ConnectedUser user, String username, String password, byte race,
 			byte gender, byte archetype, int head, String mail, 
 			byte homeland, String clientHash,
 			String version) throws LoginErrorException;
