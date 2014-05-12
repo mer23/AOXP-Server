@@ -29,9 +29,9 @@ public class City{
 	
 	/**
 	 * Creates a new city instance.
-	 * @param map The city map.
-	 * @param x   The city x co-ordinate for users spawn.
-	 * @param y   The city y co-ordinate for users spawn.
+	 * @param map The city's map id.
+	 * @param x   City's x coordinate for users spawn.
+	 * @param y   City's y coordinate for users spawn.
 	 */
 	public City(int map, byte x, byte y){
 		this.map = map;
@@ -40,24 +40,24 @@ public class City{
 	}
 	
 	/**
-	 * Retrieves the city map.
-	 * @return The city map.
+	 * Retrieves the city's map id.
+	 * @return The city's map id.
 	 */
 	public int getMap() {
 		return map;
 	}
 	
 	/**
-	 * Retrieves the city x co-ordinate for users spawn.
-	 * @return The city x co-ordinate for users spawn.
+	 * Retrieves city's X coordinate for users spawn.
+	 * @return city's X coordinate for users spawn.
 	 */
 	public byte getX() {
 		return x;
 	}
 	
 	/**
-	 * Retrieves the city y co-ordinate for users spawn.
-	 * @return The city y co-ordinate for users spawn.
+	 * Retrieves city's Y coordinate for users spawn.
+	 * @return city's Y coordinate for users spawn.
 	 */
 	public byte getY() {
 		return y;
