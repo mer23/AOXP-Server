@@ -381,7 +381,7 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 
 		// TODO: Update this when hp, mana and hit points get updated!
 		return new LoggedUser(rep, race, gender, archetype.getArchetype(),
-				false, false, false, false, false, false, 0, 0, 0, 0,
+				false, false, false, false, false, false, false, 0, 0, 0, 0,
 				100, 0, 100, 0, (byte) 1, name, "");
 	}
 
@@ -450,9 +450,7 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 		String description = "";
 
 		// TODO : Validate character
-		/* UserCharacter userCharacter = new LoggedUser(reputation, race, gender, archetype, poisoned, paralyzed, immobilized, invisible, mimetized, dumbed, hidden, maxMana, maxHitPoints, mana, hitpoints, thirstiness, hunger, lvl, username, description); */
-
-		return null;
+		return new LoggedUser(reputation, race, gender, archetype, poisoned, paralyzed, immobilized, invisible, mimetized, dumbed, hidden, maxMana, mana, maxHitPoints, hitpoints, 100, thirstiness, 100, hunger, lvl, username, description);
 	}
 
 	private Ini readCharFile(String username) throws DAOException {

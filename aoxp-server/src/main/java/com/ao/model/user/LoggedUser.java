@@ -28,6 +28,7 @@ import com.ao.model.character.Skill;
 import com.ao.model.character.UserCharacter;
 import com.ao.model.character.archetype.Archetype;
 import com.ao.model.inventory.Inventory;
+import com.ao.model.map.City;
 import com.ao.model.map.Heading;
 import com.ao.model.map.Position;
 import com.ao.model.spell.Spell;
@@ -53,6 +54,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	private Race race;
 	private Gender gender;
 	private Archetype archetype;
+	private City homeland;
 	
 	private Weapon weapon;
 	private Helmet helmet;
@@ -100,7 +102,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	
 	public LoggedUser(Reputation reputation, Race race, Gender gender,
 			Archetype archetype, boolean poisoned, boolean paralyzed,
-			boolean immobilized, boolean invisible, boolean dumbed, boolean hidden, int maxMana, int minMana, int maxHp,
+			boolean immobilized, boolean invisible, boolean mimetized, boolean dumbed, boolean hidden, int maxMana, int minMana, int maxHp,
 			int minHp, int maxThirstiness, int minThirstiness , int maxHunger, int minHunger, byte lvl,
 			String name, String description) {
 		
@@ -113,6 +115,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 		this.paralyzed = paralyzed;
 		this.immobilized = immobilized;
 		this.invisible = invisible;
+		this.mimetized= mimetized;
 		this.dumbed = dumbed;
 		this.hidden = hidden;
 		this.maxMana = maxMana;
@@ -402,6 +405,14 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	public int getOriginalHead() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public City getHomeland() {
+	    return homeland;
+	}
+	
+	public void setHomeland(City homeland) {
+	    this.homeland= homeland;
 	}
 
 	@Override

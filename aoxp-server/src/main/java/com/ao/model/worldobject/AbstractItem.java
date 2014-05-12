@@ -31,7 +31,7 @@ import com.ao.model.worldobject.properties.ItemProperties;
  */
 public abstract class AbstractItem extends AbstractWorldObject implements Item {
 
-	protected static final int MAX_STACKED_ITEMS = 10000;
+	public static final int MAX_STACKED_ITEMS = 10000; //TODO Why was this protected?
 	
 	protected int amount;
 	

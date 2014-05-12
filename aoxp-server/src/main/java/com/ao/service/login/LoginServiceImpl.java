@@ -31,6 +31,7 @@ import com.ao.model.character.Race;
 import com.ao.model.character.UserCharacter;
 import com.ao.model.character.archetype.UserArchetype;
 import com.ao.model.map.City;
+import com.ao.model.map.Position;
 import com.ao.model.user.Account;
 import com.ao.model.user.ConnectedUser;
 import com.ao.model.user.LoggedUser;
@@ -171,8 +172,10 @@ public class LoginServiceImpl implements LoginService {
 
 
 		// First, we have to create the new account.
+		Account acc;
+		
 		try {
-			Account acc = accDAO.create(username, password, mail);
+			acc = accDAO.create(username, password, mail);
 		} catch(NameAlreadyTakenException e) {
 			throw new LoginErrorException(ACCOUNT_NAME_TAKEN_ERROR);
 
@@ -183,9 +186,11 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 
-		// Once we have the account, lets create the character itself!	
+		// Once we have the account, lets create the character itself!
+		UserCharacter chara;
+		
 		try {
-			charDAO.create(username, race, gender, archetype,
+			chara= charDAO.create(username, race, gender, archetype,
 			        head, homeland, user.getAttribute(Attribute.STRENGTH),
 					user.getAttribute(Attribute.AGILITY), user.getAttribute(Attribute.INTELLIGENCE),
 					user.getAttribute(Attribute.CHARISMA), user.getAttribute(Attribute.CONSTITUTION),
@@ -197,7 +202,18 @@ public class LoginServiceImpl implements LoginService {
 			throw new LoginErrorException(e.getMessage());
 		}
 		
-		return connectExistingCharacter(user, username, password, version, clientHash);
+		acc.addCharacter(username);
+		user.setAccount(acc);
+		
+
+	    userService.logIn(user); //logs the character in.
+	    
+	    //TODO Does this belong here?
+	    chara.setPosition(new Position(homeland.getX(), homeland.getY(), mapService.getMap((byte)homeland.getMap())));
+	        
+	    mapService.putCharacterAtPos(chara, chara.getPosition()); //places character in the world.
+	        
+	    return (LoggedUser)chara;
 	}
 
 	@Override
@@ -242,7 +258,7 @@ public class LoginServiceImpl implements LoginService {
 
 		// TODO : Do something with the account!!!
 
-		UserCharacter character = acc.getCharacter(name);
+		UserCharacter character;
 
 		// TODO : send all data!
 
@@ -255,7 +271,7 @@ public class LoginServiceImpl implements LoginService {
 	          throw new LoginErrorException(e.getMessage());
 	    }
 	       
-	    userService.logIn(user); //logs the character in.
+	    userService.logIn(user); //adds character to list of logged characters.
 	    
 	    mapService.putCharacterAtPos(character, character.getPosition()); //places character in the world.
 	    

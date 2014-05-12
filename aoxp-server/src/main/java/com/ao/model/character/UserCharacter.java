@@ -19,6 +19,7 @@
 package com.ao.model.character;
 
 import com.ao.model.character.archetype.Archetype;
+import com.ao.model.map.City;
 
 public interface UserCharacter extends Character {
 
@@ -111,6 +112,17 @@ public interface UserCharacter extends Character {
      */
     Archetype getArchetype();
 
+    /**
+     * Retrieves the user's homeland.
+     * @return the user's homeland.
+     */
+    City getHomeland();
+    
+    /**
+     * Sets user's new homeland.
+     * @param homeland the new homeland.
+     */
+    void setHomeland(City homeland);
     /**
      * Retrieves the user's stamina.
      * @return The user's stamina.
