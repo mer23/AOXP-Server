@@ -42,7 +42,7 @@ public class AccountImpl implements Account {
 	 * @param password The account's password.
 	 * @param mail The account's email.
 	 * @param characters The account's characters.
-	 * @param banned Wether the account is banned or not.
+	 * @param banned Whether the account is banned or not.
 	 */
 	public AccountImpl(String name, String password, String mail, Set<String> characters, boolean banned) {
 		this.name = name;

@@ -47,7 +47,7 @@ public interface Account {
 	boolean hasCharacter(String name);
 
 	/**
-	 * Checks wether the account is banned or not.
+	 * Checks whether the account is banned or not.
 	 * @return True if the account is banned, false otherwise.
 	 */
 	boolean isBanned();
@@ -68,7 +68,7 @@ public interface Account {
 	/**
 	 * Try to authenticate the account with the given password.
 	 * @param password The password used to authenticate.
-	 * @return True if the password matchs the account password, false otherwise.
+	 * @return True if the password matches the account password, false otherwise.
 	 */
 	boolean authenticate(String password);
 
