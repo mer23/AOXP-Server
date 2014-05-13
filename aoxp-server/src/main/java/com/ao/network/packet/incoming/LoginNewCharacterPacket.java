@@ -69,8 +69,9 @@ public class LoginNewCharacterPacket implements IncomingPacket {
 					homeland, clientHash, version);
 
 		} catch (LoginErrorException e) {
-		    loggedChar= null; //If I don't do this compiler complains about it not being initialized.
+		    
 			loginError(connection, e.getMessage());
+			return true;
 		}		
 		
 		connection.send( new CharacterCreatePacket(loggedChar) );
