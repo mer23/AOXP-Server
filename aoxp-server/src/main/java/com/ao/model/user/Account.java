@@ -66,6 +66,18 @@ public interface Account {
 	UserCharacter getCharacter(String name);
 
 	/**
+	 * Retrieves this account's logged character.
+	 * @return account's currently logged character.
+	 */
+	LoggedUser getLoggedCharacter();
+	
+	/**
+	 * Sets this account's logged character.
+	 * @param the logged character.
+	 */
+	void setLoggedCharacter(LoggedUser loggedChar);
+	
+	/**
 	 * Try to authenticate the account with the given password.
 	 * @param password The password used to authenticate.
 	 * @return True if the password matches the account password, false otherwise.

@@ -32,10 +32,9 @@ public interface LoginService {
 	 * @param password 		The character's password.
 	 * @param version 		The client's version.
 	 * @param clientHash 	The client's integrity check hash.
-	 * @return the loggedUser that was successfully connected.
 	 * @throws LoginErrorException
 	 */
-	LoggedUser connectExistingCharacter(ConnectedUser user, String name, String password, String version,
+	void connectExistingCharacter(ConnectedUser user, String name, String password, String version,
 			String clientHash) throws LoginErrorException;
 	
 	/**
@@ -52,10 +51,9 @@ public interface LoginService {
 	 * @param homeland 		The character's homeland.
 	 * @param clientHash 	The client's integrity check hash.
 	 * @param version 		The client's version.
-	 * @return the loggedUser that was successfully connected.
 	 * @throws LoginErrorException
 	 */
-	LoggedUser connectNewCharacter(ConnectedUser user, String username, String password, byte race,
+	void connectNewCharacter(ConnectedUser user, String username, String password, byte race,
 			byte gender, byte archetype, int head, String mail, 
 			byte homeland, String clientHash,
 			String version) throws LoginErrorException;

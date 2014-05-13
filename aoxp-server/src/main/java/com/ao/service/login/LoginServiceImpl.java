@@ -96,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public LoggedUser connectNewCharacter(ConnectedUser user, String username, String password, byte bRace,
+	public void connectNewCharacter(ConnectedUser user, String username, String password, byte bRace,
 			byte bGender, byte bArchetype, int head, String mail,
 			byte bHomeland, String clientHash,
 			String version) throws LoginErrorException {
@@ -203,21 +203,19 @@ public class LoginServiceImpl implements LoginService {
 		}
 		
 		acc.addCharacter(username);
-		user.setAccount(acc);
-		
+		user.setAccount(acc);	
+		acc.setLoggedCharacter((LoggedUser)chara);
 
 	    userService.logIn(user); //logs the character in.
 	    
-	    //TODO Does this belong here?
+	    //TODO Is this the right place to set up char's initial position?
 	    chara.setPosition(new Position(homeland.getX(), homeland.getY(), mapService.getMap((byte)homeland.getMap())));
 	        
 	    mapService.putCharacterAtPos(chara, chara.getPosition()); //places character in the world.
-	        
-	    return (LoggedUser)chara;
 	}
 
 	@Override
-	public LoggedUser connectExistingCharacter(ConnectedUser user, String name, String password, String version,
+	public void connectExistingCharacter(ConnectedUser user, String name, String password, String version,
 			String clientHash) throws LoginErrorException {
 
 		checkClient(clientHash, version);
@@ -258,24 +256,24 @@ public class LoginServiceImpl implements LoginService {
 
 		// TODO : Do something with the account!!!
 
-		UserCharacter character;
+		UserCharacter chara;
 
 		// TODO : send all data!
 
 		user.setAccount(acc); //associates the account with the user
 
 	    try {
-	        character= (LoggedUser) charDAO.load(name); // loads the character.
+	        chara= (LoggedUser) charDAO.load(name); // loads the character.
 	            
 	    } catch (DAOException e) {
 	          throw new LoginErrorException(e.getMessage());
 	    }
+	    
+	    acc.setLoggedCharacter((LoggedUser)chara);
 	       
 	    userService.logIn(user); //adds character to list of logged characters.
 	    
-	    mapService.putCharacterAtPos(character, character.getPosition()); //places character in the world.
-	    
-	    return (LoggedUser)character;
+	    mapService.putCharacterAtPos(chara, chara.getPosition()); //places character in the world.
 	}
 
 	/**

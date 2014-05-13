@@ -36,6 +36,8 @@ public class AccountImpl implements Account {
 	protected Set<String> characters;
 	private boolean banned;
 	
+	private LoggedUser currentLoggedChar;
+	
 	/**
 	 * Creates a new account instance.
 	 * @param name The name of the account.
@@ -106,6 +108,25 @@ public class AccountImpl implements Account {
 	@Override
 	public UserCharacter getCharacter(String name) {
 		return ApplicationContext.getInstance(UserService.class).getCharacter(name);
+	}
+	
+	/* (non-Javadoc)
+     * @see com.ao.model.user.Account#getLoggedCharacter()
+     */
+	public LoggedUser getLoggedCharacter() {
+	  //TODO many NPEs may arise as a result of this method being called when no character is logged.
+	    return this.currentLoggedChar;
+	}
+	  
+	/* (non-Javadoc)
+     * @see com.ao.model.user.Account#setLoggedCharacter(com.ao.model.user.LoggedUser)
+     */
+	public void setLoggedCharacter(LoggedUser loggedChar) {
+	    
+	    if (this.hasCharacter( loggedChar.getName()) )
+	        this.currentLoggedChar= loggedChar;
+	    else
+	        this.currentLoggedChar= null;
 	}
 	
 	/* (non-Javadoc)
