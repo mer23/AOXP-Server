@@ -44,8 +44,12 @@ public class PickUpPacket implements IncomingPacket{
         
         WorldObject object = tile.getWorldObject();
          
-         if(object == null/*TODO or user is dead or user is trading*/)
+        /*TODO if (user is dead or user is trading) return true*/
+         if(object == null) {
+             
+             connection.send(new ConsoleMessagePacket("No hay nada aquí.", Font.INFO));
              return true;
+         }
 
          if (user.getPrivileges().isCouncelor()) {
 
