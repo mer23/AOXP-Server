@@ -20,6 +20,7 @@ package com.ao.network.packet.incoming;
 
 import java.io.UnsupportedEncodingException;
 
+import com.ao.model.user.ConnectedUser;
 import com.ao.model.user.LoggedUser;
 import com.ao.network.Connection;
 import com.ao.network.DataBuffer;
@@ -35,7 +36,8 @@ public class RequestPositionUpdatePacket implements IncomingPacket{
     public boolean handle(DataBuffer buffer, Connection connection)
             throws IndexOutOfBoundsException, UnsupportedEncodingException {
         
-        connection.send( new UpdatePositionPacket( (LoggedUser)connection.getUser() ));
+        LoggedUser user= ((ConnectedUser) connection.getUser()).getAccount().getLoggedCharacter();
+        connection.send( new UpdatePositionPacket(user) );
         
         return true;
     }

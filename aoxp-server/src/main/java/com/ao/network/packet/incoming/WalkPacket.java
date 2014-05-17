@@ -14,128 +14,115 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package com.ao.network.packet.incoming;
 
 import java.io.UnsupportedEncodingException;
 
 import com.ao.context.ApplicationContext;
-import com.ao.model.character.archetype.PirateArchetype;
 import com.ao.model.fonts.Font;
 import com.ao.model.map.Heading;
+import com.ao.model.user.ConnectedUser;
 import com.ao.model.user.LoggedUser;
 import com.ao.network.Connection;
 import com.ao.network.DataBuffer;
 import com.ao.network.packet.IncomingPacket;
+import com.ao.network.packet.outgoing.CharacterChangePacket;
 import com.ao.network.packet.outgoing.CharacterMovePacket;
 import com.ao.network.packet.outgoing.ConsoleMessagePacket;
 import com.ao.network.packet.outgoing.CreateFXPacket;
 import com.ao.network.packet.outgoing.MeditateTogglePacket;
+import com.ao.network.packet.outgoing.SetInvisiblePacket;
 import com.ao.service.MapService;
 
 public class WalkPacket implements IncomingPacket {
 
-	private MapService mapService = ApplicationContext.getInstance(MapService.class);
+    private MapService mapService = ApplicationContext.getInstance(MapService.class);
 
-	@Override
-	public boolean handle(DataBuffer buffer, Connection connection) throws IndexOutOfBoundsException, UnsupportedEncodingException {
+    @Override
+    public boolean handle(DataBuffer buffer, Connection connection) throws IndexOutOfBoundsException, UnsupportedEncodingException {
 
-		if (buffer.getReadableBytes() < 1) {
-			return false;
-		}
+        if (buffer.getReadableBytes() < 1) {
+            return false;
+        }
 
-		LoggedUser user = (LoggedUser) connection.getUser();
+        LoggedUser user = ( (ConnectedUser)connection.getUser() ).getAccount().getLoggedCharacter();
 
-		//TODO check security issues
+        //TODO check security issues
 
-		if ( !( user.isParalyzed() || user.isImmobilized() ) ) {
-			if (user.isMeditating()) {
-				// Stop meditating, next action will start movement.
-				user.setMeditate(false);
+        Heading heading = Heading.get(buffer.get());
 
-				connection.send(
-					new ConsoleMessagePacket("Dejas de meditar.", Font.INFO)
-				);
+        if (heading != null) {
 
-				user.getFx().setId(0);
-				user.getFx().setLoops(0);
-				
-				connection.send(
-						new MeditateTogglePacket());
-				
-				connection.send(
-						new CreateFXPacket(user)); // Halts meditation FX with a no-effect FX
+            if ( !(user.isParalyzed() || user.isImmobilized()) ) {
 
-			} else if (!user.isHomecoming()){
-			    
-				Heading heading = Heading.get(buffer.get());
-				
-				if (heading != null) {
+                if (user.isMeditating()) {
+                    // Stop meditating, next action will start movement.
+                    user.setMeditate(false);
 
-					// Move user
-					mapService.moveCharacterTo(user, heading);
-
-					//TODO Stop resting if needed
-					
                     connection.send(
-                            new CharacterMovePacket(user));
+                            new ConsoleMessagePacket("Dejas de meditar.", Font.INFO)
+                            );
 
-				} else {
-					return true;
-				}
+                    user.getFx().setId(0);
+                    user.getFx().setLoops(0);
 
-			}
-		} else { //if paralized
-			//TODO set last message flag
-			//TODO aplicar seguridad contra SH
-		    
-		    Heading heading = Heading.get(buffer.get());
+                    connection.send(
+                            new MeditateTogglePacket());
 
-            if (heading != null) {
+                    connection.send(
+                            new CreateFXPacket(user)); // Halts meditation FX with a no-effect FX
+
+                } else if (!user.isHomecoming()) {
+
+                    mapService.moveCharacterTo(user, heading); // Move user
+
+                    //TODO Stop resting if needed
+
+                    connection.send(new CharacterMovePacket(user));
+                }
+            } else { //if paralyzed
+                //TODO set last message flag
+                //TODO aplicar seguridad contra SH
 
                 user.setHeading(heading);
 
                 /* TODO client updates character's heading without 
                  * server notification (doesn't it?) so no need to send anything.
                  * */
-
-            } else {
-                return true;
             }
-		}
 
-		// Check if hidden and can move while hidden
-		if (user.isHidden() && !user.isAdminHidden() && !user.getArchetype().canWalkHidden()) {
-			user.setHidden(false);
+            // Check if hidden and can move while hidden
+            if (user.isHidden() && !user.isAdminHidden() && !user.getArchetype().canWalkHidden()) {
+                user.setHidden(false);
 
-			if (user.isSailing()) {
-				// TODO : Find a nicer way to do this...
-				if (user.getArchetype() instanceof PirateArchetype) {
+                if (user.isSailing()) {
+                    //No need to check for pirate since any character hidden while sailing MUST be a pirate.
+                    connection.send(
+                            new ConsoleMessagePacket("¡Has recuperado tu apariencia normal!", Font.INFO)
+                            );
+                    
+                    connection.send( 
+                            new CharacterChangePacket(user)
+                            );
+                        
 
-//	                    ' Pierde la apariencia de fragata fantasmal
-//	                    Call ToggleBoatBody(UserIndex)
-				
-					connection.send(
-						new ConsoleMessagePacket("¡Has recuperado tu apariencia normal!", Font.INFO)
-					);
-//	                    Call WriteConsoleMsg(UserIndex, "¡Has recuperado tu apariencia normal!", FontTypeNames.FONTTYPE_INFO)
-
-//	                    Call ChangeUserChar(UserIndex, .Char.body, .Char.Head, .Char.heading, NingunArma, _
-//	                                    NingunEscudo, NingunCasco)
-				}
-
-			} else if (user.isInvisible()) {
-
-				// If not under a spell effect, show character
-				connection.send(
-					new ConsoleMessagePacket("Has vuelto a ser visible.", Font.INFO)
-				);
-//                    Call UsUaRiOs.SetInvisible(UserIndex, .Char.CharIndex, False)
-			}
-		}
-		
-		return true;
-	}
-
+                } else if (!user.isInvisible()) {
+                    // If not under a spell effect, show character
+                    connection.send(
+                            new ConsoleMessagePacket("Has vuelto a ser visible.", Font.INFO)
+                            );
+                    
+                    user.setHidden(false);
+                    
+                    connection.send(
+                            new SetInvisiblePacket(user, false)
+                            );
+                }
+            }
+        }
+        
+        return true;
+    }
 }

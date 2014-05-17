@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 
 import com.ao.model.fonts.Font;
 import com.ao.model.map.Tile;
+import com.ao.model.user.ConnectedUser;
 import com.ao.model.user.LoggedUser;
 import com.ao.model.worldobject.AbstractItem;
 import com.ao.model.worldobject.Item;
@@ -40,7 +41,7 @@ public class DropPacket implements IncomingPacket{
         if (buffer.getReadableBytes() < 3)
             return false;
         
-        LoggedUser user= (LoggedUser) connection.getUser();
+        LoggedUser user= ((ConnectedUser)connection.getUser()).getAccount().getLoggedCharacter();
         
         //TODO should we send a message to a counselor trying to pick up an item?
         if (user.getPrivileges().isCouncelor() || user.isSailing()/*TODO or dead, or trading*/)
