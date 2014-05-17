@@ -112,7 +112,12 @@ public class WorldMapDAOImpl implements WorldMapDAO {
 			logger.error("Map " + id + " loading failed!", e);
 			throw new RuntimeException(e);
 		}
-
+		try {    
+		    dataInf.close();
+		    dataMap.close();
+		    
+		} catch (IOException e) {}
+		
 		ByteBuffer infBuffer = ByteBuffer.wrap(bufInf);
 		ByteBuffer mapBuffer = ByteBuffer.wrap(bufMap);
 

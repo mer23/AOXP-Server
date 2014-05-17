@@ -332,7 +332,7 @@ public class UserCharacterBuilder implements Builder<UserCharacter> {
 		Preconditions.checkNotNull(reputation);
 		Preconditions.checkNotNull(position);
 
-		LoggedUser user = new LoggedUser(reputation, race, gender, archetype.getArchetype(), poisoned,
+		LoggedUser user = new LoggedUser(reputation, race, gender, archetype.getArchetype(), homeland, position, poisoned,
 				paralyzed, immobilized, invisible, mimetized, dumbed, hidden, maxMana, minMana, maxHp, minHp,
 				maxThirstiness, minThirstiness, maxHunger, minHunger, lvl, name, description);
 

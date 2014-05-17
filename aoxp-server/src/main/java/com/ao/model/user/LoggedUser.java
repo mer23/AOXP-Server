@@ -101,7 +101,7 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 	private Heading heading;
 	
 	public LoggedUser(Reputation reputation, Race race, Gender gender,
-			Archetype archetype, boolean poisoned, boolean paralyzed,
+			Archetype archetype, City homeland, Position position, boolean poisoned, boolean paralyzed,
 			boolean immobilized, boolean invisible, boolean mimetized, boolean dumbed, boolean hidden, int maxMana, int minMana, int maxHp,
 			int minHp, int maxThirstiness, int minThirstiness , int maxHunger, int minHunger, byte lvl,
 			String name, String description) {
@@ -111,6 +111,8 @@ public class LoggedUser extends ConnectedUser implements UserCharacter  {
 		this.race = race;
 		this.gender = gender;
 		this.archetype = archetype;
+		this.homeland = homeland;
+		this.position = position;
 		this.poisoned = poisoned;
 		this.paralyzed = paralyzed;
 		this.immobilized = immobilized;

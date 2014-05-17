@@ -31,7 +31,6 @@ import com.ao.model.character.Race;
 import com.ao.model.character.UserCharacter;
 import com.ao.model.character.archetype.UserArchetype;
 import com.ao.model.map.City;
-import com.ao.model.map.Position;
 import com.ao.model.user.Account;
 import com.ao.model.user.ConnectedUser;
 import com.ao.model.user.LoggedUser;
@@ -208,8 +207,9 @@ public class LoginServiceImpl implements LoginService {
 
 	    userService.logIn(user); //logs the character in.
 	    
-	    //TODO Is this the right place to set up char's initial position?
-	    chara.setPosition(new Position(homeland.getX(), homeland.getY(), mapService.getMap((byte)homeland.getMap())));
+
+	    
+//	    setPosition(new Position(homeland.getX(), homeland.getY(), mapService.getMap((byte)homeland.getMap())));
 	        
 	    mapService.putCharacterAtPos(chara, chara.getPosition()); //places character in the world.
 	}

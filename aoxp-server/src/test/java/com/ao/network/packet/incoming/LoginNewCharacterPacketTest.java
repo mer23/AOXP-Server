@@ -90,6 +90,7 @@ public class LoginNewCharacterPacketTest {
 
 		mapService = ApplicationContext.getInstance(MapService.class);
 		mapService.loadCities();
+		mapService.loadMaps();
 
 		config.setRestrictedToAdmins(false);
 		config.setCharacterCreationEnabled(true);

@@ -33,6 +33,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.ini4j.Ini;
 
+import com.ao.context.ApplicationContext;
 import com.ao.data.dao.AccountDAO;
 import com.ao.data.dao.UserCharacterDAO;
 import com.ao.data.dao.exception.DAOException;
@@ -48,9 +49,11 @@ import com.ao.model.character.archetype.Archetype;
 import com.ao.model.character.archetype.UserArchetype;
 import com.ao.model.map.City;
 import com.ao.model.map.Heading;
+import com.ao.model.map.Position;
 import com.ao.model.user.Account;
 import com.ao.model.user.AccountImpl;
 import com.ao.model.user.LoggedUser;
+import com.ao.service.MapService;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -191,7 +194,11 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 	protected static final int INITIAL_NOBLE_POINTS = 1000;
 
 	private static final Logger logger = Logger.getLogger(UserDAOIni.class);
-
+	
+	/*---------FIXME awful workaround to be able to set char's position-----------*/
+	private MapService mapService = ApplicationContext.getInstance(MapService.class);
+    /*----------------------------------------------------------------------------*/
+	
 	private String charfilesPath;
 
 	@Inject
@@ -285,6 +292,9 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 
 		String positionKey = homeland.getMap() + "-" + homeland.getX() + "-" + homeland.getY();
 		chara.put(INIT_HEADER, POSITION_KEY, positionKey );
+
+		Position position= new Position(homeland.getX(), homeland.getY(), mapService.getMap(homeland.getMap()));
+		
 		// TODO: Save last ip?
 
 		chara.put(FLAGS_HEADER, BANNED_KEY, 0);
@@ -380,7 +390,7 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 		}
 
 		// TODO: Update this when hp, mana and hit points get updated!
-		return new LoggedUser(rep, race, gender, archetype.getArchetype(),
+		return new LoggedUser(rep, race, gender, archetype.getArchetype(), homeland, position,
 				false, false, false, false, false, false, false, 0, 0, 0, 0,
 				100, 0, 100, 0, (byte) 1, name, "");
 	}
@@ -423,6 +433,18 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 
 		Archetype archetype = UserArchetype.get(Byte.parseByte(chara.get(INIT_HEADER, ARCHETYPE_KEY))).getArchetype();
 
+		int homeId= Integer.parseInt(chara.get(INIT_HEADER, HOMELAND_KEY));
+		
+		City homeland= new City( homeId, mapService.getCity((byte)homeId).getX() , mapService.getCity((byte)homeId).getY());
+		
+        String[] stringPos= chara.get(INIT_HEADER, POSITION_KEY).split("-");
+        
+        Position position= new Position (
+                Byte.parseByte(stringPos[1]), 
+                Byte.parseByte(stringPos[2]), 
+                mapService.getMap(Integer.parseInt(stringPos[0]))
+                );
+		
 		boolean poisoned = chara.get(FLAGS_HEADER, POISONED_KEY).equals("1");
 
 		boolean paralyzed = chara.get(FLAGS_HEADER, PARALYZED_KEY).equals("1");
@@ -450,7 +472,7 @@ public class UserDAOIni implements AccountDAO, UserCharacterDAO {
 		String description = "";
 
 		// TODO : Validate character
-		return new LoggedUser(reputation, race, gender, archetype, poisoned, paralyzed, immobilized, invisible, mimetized, dumbed, hidden, maxMana, mana, maxHitPoints, hitpoints, 100, thirstiness, 100, hunger, lvl, username, description);
+		return new LoggedUser(reputation, race, gender, archetype, homeland, position, poisoned, paralyzed, immobilized, invisible, mimetized, dumbed, hidden, maxMana, mana, maxHitPoints, hitpoints, 100, thirstiness, 100, hunger, lvl, username, description);
 	}
 
 	private Ini readCharFile(String username) throws DAOException {
